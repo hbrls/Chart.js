@@ -17,17 +17,17 @@
 		//The percentage of the chart that we cut out of the middle.
 		percentageInnerCutout : 50,
 
-		//Number - Amount of animation steps
-		animationSteps : 100,
+		// //Number - Amount of animation steps
+		// animationSteps : 100,
 
-		//String - Animation easing effect
-		animationEasing : "easeOutBounce",
+		// //String - Animation easing effect
+		// animationEasing : "easeOutBounce",
 
-		//Boolean - Whether we animate the rotation of the Doughnut
-		animateRotate : true,
+		// //Boolean - Whether we animate the rotation of the Doughnut
+		// animateRotate : true,
 
-		//Boolean - Whether we animate scaling the Doughnut from the centre
-		animateScale : false,
+		// //Boolean - Whether we animate scaling the Doughnut from the centre
+		// animateScale : false,
 
 		//String - A legend template
 		legendTemplate : "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<segments.length; i++){%><li><span class=\"<%=name.toLowerCase()%>-legend-icon\" style=\"background-color:<%=segments[i].fillColor%>\"></span><span class=\"<%=name.toLowerCase()%>-legend-text\"><%if(segments[i].label){%><%=segments[i].label%><%}%></span></li><%}%></ul>"

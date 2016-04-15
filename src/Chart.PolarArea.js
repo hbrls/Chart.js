@@ -32,17 +32,17 @@
 		//Number - The width of the stroke value in pixels
 		segmentStrokeWidth : 2,
 
-		//Number - Amount of animation steps
-		animationSteps : 100,
+		// //Number - Amount of animation steps
+		// animationSteps : 100,
 
-		//String - Animation easing effect.
-		animationEasing : "easeOutBounce",
+		// //String - Animation easing effect.
+		// animationEasing : "easeOutBounce",
 
-		//Boolean - Whether to animate the rotation of the chart
-		animateRotate : true,
+		// //Boolean - Whether to animate the rotation of the chart
+		// animateRotate : true,
 
-		//Boolean - Whether to animate scaling the chart from the centre
-		animateScale : false,
+		// //Boolean - Whether to animate scaling the chart from the centre
+		// animateScale : false,
 
 		//String - A legend template
 		legendTemplate : "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<segments.length; i++){%><li><span class=\"<%=name.toLowerCase()%>-legend-icon\" style=\"background-color:<%=segments[i].fillColor%>\"></span><span class=\"<%=name.toLowerCase()%>-legend-text\"><%if(segments[i].label){%><%=segments[i].label%><%}%></span></li><%}%></ul>"

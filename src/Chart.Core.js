@@ -47,14 +47,14 @@
 	//Globally expose the defaults to allow for user updating/changing
 	Chart.defaults = {
 		global: {
-			// Boolean - Whether to animate the chart
-			animation: true,
+			// // Boolean - Whether to animate the chart
+			// animation: true,
 
-			// Number - Number of animation steps
-			animationSteps: 60,
+			// // Number - Number of animation steps
+			// animationSteps: 60,
 
-			// String - Animation easing effect
-			animationEasing: "easeOutQuart",
+			// // String - Animation easing effect
+			// animationEasing: "easeOutQuart",
 
 			// Boolean - If we should show the scale at all
 			showScale: true,
@@ -175,11 +175,11 @@
 			// Array - A list of highlight colors to use as the defaults
 			segmentHighlightColorDefaults: [ "#CEF6FF", "#47A0DC", "#DAFFB2", "#5BC854", "#FFC2C1", "#FF4244", "#FFE797", "#FFA728", "#F2DAFE", "#9265C2", "#DCDCAA", "#D98150" ],
 
-			// Function - Will fire on animation progression.
-			onAnimationProgress: function(){},
+			// // Function - Will fire on animation progression.
+			// onAnimationProgress: function(){},
 
-			// Function - Will fire on animation completion.
-			onAnimationComplete: function(){}
+			// // Function - Will fire on animation completion.
+			// onAnimationComplete: function(){}
 
 		}
 	};
@@ -535,245 +535,245 @@
 			}
 			return labelsArray;
 		},
-		//--Animation methods
-		//Easing functions adapted from Robert Penner's easing equations
-		//http://www.robertpenner.com/easing/
-		easingEffects = helpers.easingEffects = {
-			linear: function (t) {
-				return t;
-			},
-			easeInQuad: function (t) {
-				return t * t;
-			},
-			easeOutQuad: function (t) {
-				return -1 * t * (t - 2);
-			},
-			easeInOutQuad: function (t) {
-				if ((t /= 1 / 2) < 1){
-					return 1 / 2 * t * t;
-				}
-				return -1 / 2 * ((--t) * (t - 2) - 1);
-			},
-			easeInCubic: function (t) {
-				return t * t * t;
-			},
-			easeOutCubic: function (t) {
-				return 1 * ((t = t / 1 - 1) * t * t + 1);
-			},
-			easeInOutCubic: function (t) {
-				if ((t /= 1 / 2) < 1){
-					return 1 / 2 * t * t * t;
-				}
-				return 1 / 2 * ((t -= 2) * t * t + 2);
-			},
-			easeInQuart: function (t) {
-				return t * t * t * t;
-			},
-			easeOutQuart: function (t) {
-				return -1 * ((t = t / 1 - 1) * t * t * t - 1);
-			},
-			easeInOutQuart: function (t) {
-				if ((t /= 1 / 2) < 1){
-					return 1 / 2 * t * t * t * t;
-				}
-				return -1 / 2 * ((t -= 2) * t * t * t - 2);
-			},
-			easeInQuint: function (t) {
-				return 1 * (t /= 1) * t * t * t * t;
-			},
-			easeOutQuint: function (t) {
-				return 1 * ((t = t / 1 - 1) * t * t * t * t + 1);
-			},
-			easeInOutQuint: function (t) {
-				if ((t /= 1 / 2) < 1){
-					return 1 / 2 * t * t * t * t * t;
-				}
-				return 1 / 2 * ((t -= 2) * t * t * t * t + 2);
-			},
-			easeInSine: function (t) {
-				return -1 * Math.cos(t / 1 * (Math.PI / 2)) + 1;
-			},
-			easeOutSine: function (t) {
-				return 1 * Math.sin(t / 1 * (Math.PI / 2));
-			},
-			easeInOutSine: function (t) {
-				return -1 / 2 * (Math.cos(Math.PI * t / 1) - 1);
-			},
-			easeInExpo: function (t) {
-				return (t === 0) ? 1 : 1 * Math.pow(2, 10 * (t / 1 - 1));
-			},
-			easeOutExpo: function (t) {
-				return (t === 1) ? 1 : 1 * (-Math.pow(2, -10 * t / 1) + 1);
-			},
-			easeInOutExpo: function (t) {
-				if (t === 0){
-					return 0;
-				}
-				if (t === 1){
-					return 1;
-				}
-				if ((t /= 1 / 2) < 1){
-					return 1 / 2 * Math.pow(2, 10 * (t - 1));
-				}
-				return 1 / 2 * (-Math.pow(2, -10 * --t) + 2);
-			},
-			easeInCirc: function (t) {
-				if (t >= 1){
-					return t;
-				}
-				return -1 * (Math.sqrt(1 - (t /= 1) * t) - 1);
-			},
-			easeOutCirc: function (t) {
-				return 1 * Math.sqrt(1 - (t = t / 1 - 1) * t);
-			},
-			easeInOutCirc: function (t) {
-				if ((t /= 1 / 2) < 1){
-					return -1 / 2 * (Math.sqrt(1 - t * t) - 1);
-				}
-				return 1 / 2 * (Math.sqrt(1 - (t -= 2) * t) + 1);
-			},
-			easeInElastic: function (t) {
-				var s = 1.70158;
-				var p = 0;
-				var a = 1;
-				if (t === 0){
-					return 0;
-				}
-				if ((t /= 1) == 1){
-					return 1;
-				}
-				if (!p){
-					p = 1 * 0.3;
-				}
-				if (a < Math.abs(1)) {
-					a = 1;
-					s = p / 4;
-				} else{
-					s = p / (2 * Math.PI) * Math.asin(1 / a);
-				}
-				return -(a * Math.pow(2, 10 * (t -= 1)) * Math.sin((t * 1 - s) * (2 * Math.PI) / p));
-			},
-			easeOutElastic: function (t) {
-				var s = 1.70158;
-				var p = 0;
-				var a = 1;
-				if (t === 0){
-					return 0;
-				}
-				if ((t /= 1) == 1){
-					return 1;
-				}
-				if (!p){
-					p = 1 * 0.3;
-				}
-				if (a < Math.abs(1)) {
-					a = 1;
-					s = p / 4;
-				} else{
-					s = p / (2 * Math.PI) * Math.asin(1 / a);
-				}
-				return a * Math.pow(2, -10 * t) * Math.sin((t * 1 - s) * (2 * Math.PI) / p) + 1;
-			},
-			easeInOutElastic: function (t) {
-				var s = 1.70158;
-				var p = 0;
-				var a = 1;
-				if (t === 0){
-					return 0;
-				}
-				if ((t /= 1 / 2) == 2){
-					return 1;
-				}
-				if (!p){
-					p = 1 * (0.3 * 1.5);
-				}
-				if (a < Math.abs(1)) {
-					a = 1;
-					s = p / 4;
-				} else {
-					s = p / (2 * Math.PI) * Math.asin(1 / a);
-				}
-				if (t < 1){
-					return -0.5 * (a * Math.pow(2, 10 * (t -= 1)) * Math.sin((t * 1 - s) * (2 * Math.PI) / p));}
-				return a * Math.pow(2, -10 * (t -= 1)) * Math.sin((t * 1 - s) * (2 * Math.PI) / p) * 0.5 + 1;
-			},
-			easeInBack: function (t) {
-				var s = 1.70158;
-				return 1 * (t /= 1) * t * ((s + 1) * t - s);
-			},
-			easeOutBack: function (t) {
-				var s = 1.70158;
-				return 1 * ((t = t / 1 - 1) * t * ((s + 1) * t + s) + 1);
-			},
-			easeInOutBack: function (t) {
-				var s = 1.70158;
-				if ((t /= 1 / 2) < 1){
-					return 1 / 2 * (t * t * (((s *= (1.525)) + 1) * t - s));
-				}
-				return 1 / 2 * ((t -= 2) * t * (((s *= (1.525)) + 1) * t + s) + 2);
-			},
-			easeInBounce: function (t) {
-				return 1 - easingEffects.easeOutBounce(1 - t);
-			},
-			easeOutBounce: function (t) {
-				if ((t /= 1) < (1 / 2.75)) {
-					return 1 * (7.5625 * t * t);
-				} else if (t < (2 / 2.75)) {
-					return 1 * (7.5625 * (t -= (1.5 / 2.75)) * t + 0.75);
-				} else if (t < (2.5 / 2.75)) {
-					return 1 * (7.5625 * (t -= (2.25 / 2.75)) * t + 0.9375);
-				} else {
-					return 1 * (7.5625 * (t -= (2.625 / 2.75)) * t + 0.984375);
-				}
-			},
-			easeInOutBounce: function (t) {
-				if (t < 1 / 2){
-					return easingEffects.easeInBounce(t * 2) * 0.5;
-				}
-				return easingEffects.easeOutBounce(t * 2 - 1) * 0.5 + 1 * 0.5;
-			}
-		},
-		//Request animation polyfill - http://www.paulirish.com/2011/requestanimationframe-for-smart-animating/
-		requestAnimFrame = helpers.requestAnimFrame = (function(){
-			return window.requestAnimationFrame ||
-				window.webkitRequestAnimationFrame ||
-				window.mozRequestAnimationFrame ||
-				window.oRequestAnimationFrame ||
-				window.msRequestAnimationFrame ||
-				function(callback) {
-					return window.setTimeout(callback, 1000 / 60);
-				};
-		})(),
-		cancelAnimFrame = helpers.cancelAnimFrame = (function(){
-			return window.cancelAnimationFrame ||
-				window.webkitCancelAnimationFrame ||
-				window.mozCancelAnimationFrame ||
-				window.oCancelAnimationFrame ||
-				window.msCancelAnimationFrame ||
-				function(callback) {
-					return window.clearTimeout(callback, 1000 / 60);
-				};
-		})(),
-		animationLoop = helpers.animationLoop = function(callback,totalSteps,easingString,onProgress,onComplete,chartInstance){
+		// // --Animation methods
+		// // Easing functions adapted from Robert Penner's easing equations
+		// // http://www.robertpenner.com/easing/
+		// easingEffects = helpers.easingEffects = {
+		// 	linear: function (t) {
+		// 		return t;
+		// 	},
+		// 	easeInQuad: function (t) {
+		// 		return t * t;
+		// 	},
+		// 	easeOutQuad: function (t) {
+		// 		return -1 * t * (t - 2);
+		// 	},
+		// 	easeInOutQuad: function (t) {
+		// 		if ((t /= 1 / 2) < 1){
+		// 			return 1 / 2 * t * t;
+		// 		}
+		// 		return -1 / 2 * ((--t) * (t - 2) - 1);
+		// 	},
+		// 	easeInCubic: function (t) {
+		// 		return t * t * t;
+		// 	},
+		// 	easeOutCubic: function (t) {
+		// 		return 1 * ((t = t / 1 - 1) * t * t + 1);
+		// 	},
+		// 	easeInOutCubic: function (t) {
+		// 		if ((t /= 1 / 2) < 1){
+		// 			return 1 / 2 * t * t * t;
+		// 		}
+		// 		return 1 / 2 * ((t -= 2) * t * t + 2);
+		// 	},
+		// 	easeInQuart: function (t) {
+		// 		return t * t * t * t;
+		// 	},
+		// 	easeOutQuart: function (t) {
+		// 		return -1 * ((t = t / 1 - 1) * t * t * t - 1);
+		// 	},
+		// 	easeInOutQuart: function (t) {
+		// 		if ((t /= 1 / 2) < 1){
+		// 			return 1 / 2 * t * t * t * t;
+		// 		}
+		// 		return -1 / 2 * ((t -= 2) * t * t * t - 2);
+		// 	},
+		// 	easeInQuint: function (t) {
+		// 		return 1 * (t /= 1) * t * t * t * t;
+		// 	},
+		// 	easeOutQuint: function (t) {
+		// 		return 1 * ((t = t / 1 - 1) * t * t * t * t + 1);
+		// 	},
+		// 	easeInOutQuint: function (t) {
+		// 		if ((t /= 1 / 2) < 1){
+		// 			return 1 / 2 * t * t * t * t * t;
+		// 		}
+		// 		return 1 / 2 * ((t -= 2) * t * t * t * t + 2);
+		// 	},
+		// 	easeInSine: function (t) {
+		// 		return -1 * Math.cos(t / 1 * (Math.PI / 2)) + 1;
+		// 	},
+		// 	easeOutSine: function (t) {
+		// 		return 1 * Math.sin(t / 1 * (Math.PI / 2));
+		// 	},
+		// 	easeInOutSine: function (t) {
+		// 		return -1 / 2 * (Math.cos(Math.PI * t / 1) - 1);
+		// 	},
+		// 	easeInExpo: function (t) {
+		// 		return (t === 0) ? 1 : 1 * Math.pow(2, 10 * (t / 1 - 1));
+		// 	},
+		// 	easeOutExpo: function (t) {
+		// 		return (t === 1) ? 1 : 1 * (-Math.pow(2, -10 * t / 1) + 1);
+		// 	},
+		// 	easeInOutExpo: function (t) {
+		// 		if (t === 0){
+		// 			return 0;
+		// 		}
+		// 		if (t === 1){
+		// 			return 1;
+		// 		}
+		// 		if ((t /= 1 / 2) < 1){
+		// 			return 1 / 2 * Math.pow(2, 10 * (t - 1));
+		// 		}
+		// 		return 1 / 2 * (-Math.pow(2, -10 * --t) + 2);
+		// 	},
+		// 	easeInCirc: function (t) {
+		// 		if (t >= 1){
+		// 			return t;
+		// 		}
+		// 		return -1 * (Math.sqrt(1 - (t /= 1) * t) - 1);
+		// 	},
+		// 	easeOutCirc: function (t) {
+		// 		return 1 * Math.sqrt(1 - (t = t / 1 - 1) * t);
+		// 	},
+		// 	easeInOutCirc: function (t) {
+		// 		if ((t /= 1 / 2) < 1){
+		// 			return -1 / 2 * (Math.sqrt(1 - t * t) - 1);
+		// 		}
+		// 		return 1 / 2 * (Math.sqrt(1 - (t -= 2) * t) + 1);
+		// 	},
+		// 	easeInElastic: function (t) {
+		// 		var s = 1.70158;
+		// 		var p = 0;
+		// 		var a = 1;
+		// 		if (t === 0){
+		// 			return 0;
+		// 		}
+		// 		if ((t /= 1) == 1){
+		// 			return 1;
+		// 		}
+		// 		if (!p){
+		// 			p = 1 * 0.3;
+		// 		}
+		// 		if (a < Math.abs(1)) {
+		// 			a = 1;
+		// 			s = p / 4;
+		// 		} else{
+		// 			s = p / (2 * Math.PI) * Math.asin(1 / a);
+		// 		}
+		// 		return -(a * Math.pow(2, 10 * (t -= 1)) * Math.sin((t * 1 - s) * (2 * Math.PI) / p));
+		// 	},
+		// 	easeOutElastic: function (t) {
+		// 		var s = 1.70158;
+		// 		var p = 0;
+		// 		var a = 1;
+		// 		if (t === 0){
+		// 			return 0;
+		// 		}
+		// 		if ((t /= 1) == 1){
+		// 			return 1;
+		// 		}
+		// 		if (!p){
+		// 			p = 1 * 0.3;
+		// 		}
+		// 		if (a < Math.abs(1)) {
+		// 			a = 1;
+		// 			s = p / 4;
+		// 		} else{
+		// 			s = p / (2 * Math.PI) * Math.asin(1 / a);
+		// 		}
+		// 		return a * Math.pow(2, -10 * t) * Math.sin((t * 1 - s) * (2 * Math.PI) / p) + 1;
+		// 	},
+		// 	easeInOutElastic: function (t) {
+		// 		var s = 1.70158;
+		// 		var p = 0;
+		// 		var a = 1;
+		// 		if (t === 0){
+		// 			return 0;
+		// 		}
+		// 		if ((t /= 1 / 2) == 2){
+		// 			return 1;
+		// 		}
+		// 		if (!p){
+		// 			p = 1 * (0.3 * 1.5);
+		// 		}
+		// 		if (a < Math.abs(1)) {
+		// 			a = 1;
+		// 			s = p / 4;
+		// 		} else {
+		// 			s = p / (2 * Math.PI) * Math.asin(1 / a);
+		// 		}
+		// 		if (t < 1){
+		// 			return -0.5 * (a * Math.pow(2, 10 * (t -= 1)) * Math.sin((t * 1 - s) * (2 * Math.PI) / p));}
+		// 		return a * Math.pow(2, -10 * (t -= 1)) * Math.sin((t * 1 - s) * (2 * Math.PI) / p) * 0.5 + 1;
+		// 	},
+		// 	easeInBack: function (t) {
+		// 		var s = 1.70158;
+		// 		return 1 * (t /= 1) * t * ((s + 1) * t - s);
+		// 	},
+		// 	easeOutBack: function (t) {
+		// 		var s = 1.70158;
+		// 		return 1 * ((t = t / 1 - 1) * t * ((s + 1) * t + s) + 1);
+		// 	},
+		// 	easeInOutBack: function (t) {
+		// 		var s = 1.70158;
+		// 		if ((t /= 1 / 2) < 1){
+		// 			return 1 / 2 * (t * t * (((s *= (1.525)) + 1) * t - s));
+		// 		}
+		// 		return 1 / 2 * ((t -= 2) * t * (((s *= (1.525)) + 1) * t + s) + 2);
+		// 	},
+		// 	easeInBounce: function (t) {
+		// 		return 1 - easingEffects.easeOutBounce(1 - t);
+		// 	},
+		// 	easeOutBounce: function (t) {
+		// 		if ((t /= 1) < (1 / 2.75)) {
+		// 			return 1 * (7.5625 * t * t);
+		// 		} else if (t < (2 / 2.75)) {
+		// 			return 1 * (7.5625 * (t -= (1.5 / 2.75)) * t + 0.75);
+		// 		} else if (t < (2.5 / 2.75)) {
+		// 			return 1 * (7.5625 * (t -= (2.25 / 2.75)) * t + 0.9375);
+		// 		} else {
+		// 			return 1 * (7.5625 * (t -= (2.625 / 2.75)) * t + 0.984375);
+		// 		}
+		// 	},
+		// 	easeInOutBounce: function (t) {
+		// 		if (t < 1 / 2){
+		// 			return easingEffects.easeInBounce(t * 2) * 0.5;
+		// 		}
+		// 		return easingEffects.easeOutBounce(t * 2 - 1) * 0.5 + 1 * 0.5;
+		// 	}
+		// },
+		// //Request animation polyfill - http://www.paulirish.com/2011/requestanimationframe-for-smart-animating/
+		// requestAnimFrame = helpers.requestAnimFrame = (function(){
+		// 	return window.requestAnimationFrame ||
+		// 		window.webkitRequestAnimationFrame ||
+		// 		window.mozRequestAnimationFrame ||
+		// 		window.oRequestAnimationFrame ||
+		// 		window.msRequestAnimationFrame ||
+		// 		function(callback) {
+		// 			return window.setTimeout(callback, 1000 / 60);
+		// 		};
+		// })(),
+		// cancelAnimFrame = helpers.cancelAnimFrame = (function(){
+		// 	return window.cancelAnimationFrame ||
+		// 		window.webkitCancelAnimationFrame ||
+		// 		window.mozCancelAnimationFrame ||
+		// 		window.oCancelAnimationFrame ||
+		// 		window.msCancelAnimationFrame ||
+		// 		function(callback) {
+		// 			return window.clearTimeout(callback, 1000 / 60);
+		// 		};
+		// })(),
+		// animationLoop = helpers.animationLoop = function(callback,totalSteps,easingString,onProgress,onComplete,chartInstance){
 
-			var currentStep = 0,
-				easingFunction = easingEffects[easingString] || easingEffects.linear;
+		// 	var currentStep = 0,
+		// 		easingFunction = easingEffects[easingString] || easingEffects.linear;
 
-			var animationFrame = function(){
-				currentStep++;
-				var stepDecimal = currentStep/totalSteps;
-				var easeDecimal = easingFunction(stepDecimal);
+		// 	var animationFrame = function(){
+		// 		currentStep++;
+		// 		var stepDecimal = currentStep/totalSteps;
+		// 		var easeDecimal = easingFunction(stepDecimal);
 
-				callback.call(chartInstance,easeDecimal,stepDecimal, currentStep);
-				onProgress.call(chartInstance,easeDecimal,stepDecimal);
-				if (currentStep < totalSteps){
-					chartInstance.animationFrame = requestAnimFrame(animationFrame);
-				} else{
-					onComplete.apply(chartInstance);
-				}
-			};
-			requestAnimFrame(animationFrame);
-		},
+		// 		callback.call(chartInstance,easeDecimal,stepDecimal, currentStep);
+		// 		onProgress.call(chartInstance,easeDecimal,stepDecimal);
+		// 		if (currentStep < totalSteps){
+		// 			chartInstance.animationFrame = requestAnimFrame(animationFrame);
+		// 		} else{
+		// 			onComplete.apply(chartInstance);
+		// 		}
+		// 	};
+		// 	requestAnimFrame(animationFrame);
+		// },
 		//-- DOM methods
 		getRelativePosition = helpers.getRelativePosition = function(evt){
 			var mouseX, mouseY;
@@ -919,13 +919,13 @@
 			clear(this.chart);
 			return this;
 		},
-		stop : function(){
-			// Stops any current animation loop occuring
-			Chart.animationService.cancelAnimation(this);
-			return this;
-		},
+		// stop : function(){
+		// 	// Stops any current animation loop occuring
+		// 	Chart.animationService.cancelAnimation(this);
+		// 	return this;
+		// },
 		resize : function(callback){
-			this.stop();
+			// this.stop();
 			var canvas = this.chart.canvas,
 				newWidth = getMaximumWidth(this.chart.canvas),
 				newHeight = this.options.maintainAspectRatio ? newWidth / this.chart.aspectRatio : getMaximumHeight(this.chart.canvas);
@@ -945,38 +945,38 @@
 			if (reflow){
 				this.reflow();
 			}
-			
-			if (this.options.animation && !reflow){
-				var animation = new Chart.Animation();
-				animation.numSteps = this.options.animationSteps;
-				animation.easing = this.options.animationEasing;
-				
-				// render function
-				animation.render = function(chartInstance, animationObject) {
-					var easingFunction = helpers.easingEffects[animationObject.easing];
-					var stepDecimal = animationObject.currentStep / animationObject.numSteps;
-					var easeDecimal = easingFunction(stepDecimal);
-					
-					chartInstance.draw(easeDecimal, stepDecimal, animationObject.currentStep);
-				};
-				
-				// user events
-				animation.onAnimationProgress = this.options.onAnimationProgress;
-				animation.onAnimationComplete = this.options.onAnimationComplete;
-				
-				Chart.animationService.addAnimation(this, animation);
-			}
-			else{
+
+			// if (this.options.animation && !reflow){
+			// 	var animation = new Chart.Animation();
+			// 	animation.numSteps = this.options.animationSteps;
+			// 	animation.easing = this.options.animationEasing;
+
+			// 	// render function
+			// 	animation.render = function(chartInstance, animationObject) {
+			// 		var easingFunction = helpers.easingEffects[animationObject.easing];
+			// 		var stepDecimal = animationObject.currentStep / animationObject.numSteps;
+			// 		var easeDecimal = easingFunction(stepDecimal);
+
+			// 		chartInstance.draw(easeDecimal, stepDecimal, animationObject.currentStep);
+			// 	};
+
+			// 	// user events
+			// 	animation.onAnimationProgress = this.options.onAnimationProgress;
+			// 	animation.onAnimationComplete = this.options.onAnimationComplete;
+
+			// 	Chart.animationService.addAnimation(this, animation);
+			// }
+			// else{
 				this.draw();
-				this.options.onAnimationComplete.call(this);
-			}
+				// this.options.onAnimationComplete.call(this);
+			// }
 			return this;
 		},
 		generateLegend : function(){
 			return helpers.template(this.options.legendTemplate, this);
 		},
 		destroy : function(){
-			this.stop();
+			// this.stop();
 			this.clear();
 			unbindEvents(this, this.events);
 			var canvas = this.chart.canvas;
@@ -1381,16 +1381,16 @@
 		}
 	});
 
-	Chart.Animation = Chart.Element.extend({
-		currentStep: null, // the current animation step
-		numSteps: 60, // default number of steps
-		easing: "", // the easing to use for this animation
-		render: null, // render function used by the animation service
-		
-		onAnimationProgress: null, // user specified callback to fire on each step of the animation 
-		onAnimationComplete: null, // user specified callback to fire when the animation finishes
-	});
-	
+	// Chart.Animation = Chart.Element.extend({
+	// 	currentStep: null, // the current animation step
+	// 	numSteps: 60, // default number of steps
+	// 	easing: "", // the easing to use for this animation
+	// 	render: null, // render function used by the animation service
+
+	// 	onAnimationProgress: null, // user specified callback to fire on each step of the animation
+	// 	onAnimationComplete: null, // user specified callback to fire when the animation finishes
+	// });
+
 	Chart.Tooltip = Chart.Element.extend({
 		draw : function(){
 
@@ -2123,92 +2123,92 @@
 		}
 	});
 
-	Chart.animationService = {
-		frameDuration: 17,
-		animations: [],
-		dropFrames: 0,
-		addAnimation: function(chartInstance, animationObject) {
-			for (var index = 0; index < this.animations.length; ++ index){
-				if (this.animations[index].chartInstance === chartInstance){
-					// replacing an in progress animation
-					this.animations[index].animationObject = animationObject;
-					return;
-				}
-			}
-			
-			this.animations.push({
-				chartInstance: chartInstance,
-				animationObject: animationObject
-			});
+	// Chart.animationService = {
+	// 	frameDuration: 17,
+	// 	animations: [],
+	// 	dropFrames: 0,
+	// 	addAnimation: function(chartInstance, animationObject) {
+	// 		for (var index = 0; index < this.animations.length; ++ index){
+	// 			if (this.animations[index].chartInstance === chartInstance){
+	// 				// replacing an in progress animation
+	// 				this.animations[index].animationObject = animationObject;
+	// 				return;
+	// 			}
+	// 		}
 
-			// If there are no animations queued, manually kickstart a digest, for lack of a better word
-			if (this.animations.length == 1) {
-				helpers.requestAnimFrame.call(window, this.digestWrapper);
-			}
-		},
-		// Cancel the animation for a given chart instance
-		cancelAnimation: function(chartInstance) {
-			var index = helpers.findNextWhere(this.animations, function(animationWrapper) {
-				return animationWrapper.chartInstance === chartInstance;
-			});
-			
-			if (index)
-			{
-				this.animations.splice(index, 1);
-			}
-		},
-		// calls startDigest with the proper context
-		digestWrapper: function() {
-			Chart.animationService.startDigest.call(Chart.animationService);
-		},
-		startDigest: function() {
+	// 		this.animations.push({
+	// 			chartInstance: chartInstance,
+	// 			animationObject: animationObject
+	// 		});
 
-			var startTime = Date.now();
-			var framesToDrop = 0;
+	// 		// If there are no animations queued, manually kickstart a digest, for lack of a better word
+	// 		if (this.animations.length == 1) {
+	// 			helpers.requestAnimFrame.call(window, this.digestWrapper);
+	// 		}
+	// 	},
+	// 	// Cancel the animation for a given chart instance
+	// 	cancelAnimation: function(chartInstance) {
+	// 		var index = helpers.findNextWhere(this.animations, function(animationWrapper) {
+	// 			return animationWrapper.chartInstance === chartInstance;
+	// 		});
 
-			if(this.dropFrames > 1){
-				framesToDrop = Math.floor(this.dropFrames);
-				this.dropFrames -= framesToDrop;
-			}
+	// 		if (index)
+	// 		{
+	// 			this.animations.splice(index, 1);
+	// 		}
+	// 	},
+	// 	// calls startDigest with the proper context
+	// 	digestWrapper: function() {
+	// 		Chart.animationService.startDigest.call(Chart.animationService);
+	// 	},
+	// 	startDigest: function() {
 
-			for (var i = 0; i < this.animations.length; i++) {
+	// 		var startTime = Date.now();
+	// 		var framesToDrop = 0;
 
-				if (this.animations[i].animationObject.currentStep === null){
-					this.animations[i].animationObject.currentStep = 0;
-				}
+	// 		if(this.dropFrames > 1){
+	// 			framesToDrop = Math.floor(this.dropFrames);
+	// 			this.dropFrames -= framesToDrop;
+	// 		}
 
-				this.animations[i].animationObject.currentStep += 1 + framesToDrop;
-				if(this.animations[i].animationObject.currentStep > this.animations[i].animationObject.numSteps){
-					this.animations[i].animationObject.currentStep = this.animations[i].animationObject.numSteps;
-				}
-				
-				this.animations[i].animationObject.render(this.animations[i].chartInstance, this.animations[i].animationObject);
-				
-				// Check if executed the last frame.
-				if (this.animations[i].animationObject.currentStep == this.animations[i].animationObject.numSteps){
-					// Call onAnimationComplete
-					this.animations[i].animationObject.onAnimationComplete.call(this.animations[i].chartInstance);
-					// Remove the animation.
-					this.animations.splice(i, 1);
-					// Keep the index in place to offset the splice
-					i--;
-				}
-			}
+	// 		for (var i = 0; i < this.animations.length; i++) {
 
-			var endTime = Date.now();
-			var delay = endTime - startTime - this.frameDuration;
-			var frameDelay = delay / this.frameDuration;
+	// 			if (this.animations[i].animationObject.currentStep === null){
+	// 				this.animations[i].animationObject.currentStep = 0;
+	// 			}
 
-			if(frameDelay > 1){
-				this.dropFrames += frameDelay;
-			}
+	// 			this.animations[i].animationObject.currentStep += 1 + framesToDrop;
+	// 			if(this.animations[i].animationObject.currentStep > this.animations[i].animationObject.numSteps){
+	// 				this.animations[i].animationObject.currentStep = this.animations[i].animationObject.numSteps;
+	// 			}
 
-			// Do we have more stuff to animate?
-			if (this.animations.length > 0){
-				helpers.requestAnimFrame.call(window, this.digestWrapper);
-			}
-		}
-	};
+	// 			this.animations[i].animationObject.render(this.animations[i].chartInstance, this.animations[i].animationObject);
+
+	// 			// Check if executed the last frame.
+	// 			if (this.animations[i].animationObject.currentStep == this.animations[i].animationObject.numSteps){
+	// 				// Call onAnimationComplete
+	// 				this.animations[i].animationObject.onAnimationComplete.call(this.animations[i].chartInstance);
+	// 				// Remove the animation.
+	// 				this.animations.splice(i, 1);
+	// 				// Keep the index in place to offset the splice
+	// 				i--;
+	// 			}
+	// 		}
+
+	// 		var endTime = Date.now();
+	// 		var delay = endTime - startTime - this.frameDuration;
+	// 		var frameDelay = delay / this.frameDuration;
+
+	// 		if(frameDelay > 1){
+	// 			this.dropFrames += frameDelay;
+	// 		}
+
+	// 		// Do we have more stuff to animate?
+	// 		if (this.animations.length > 0){
+	// 			helpers.requestAnimFrame.call(window, this.digestWrapper);
+	// 		}
+	// 	}
+	// };
 
 	// Attach global event to resize each chart instance when the browser resizes
 	helpers.addEvent(window, "resize", (function(){

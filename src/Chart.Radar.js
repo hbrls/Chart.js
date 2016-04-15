@@ -113,16 +113,16 @@
 
 				helpers.each(dataset.data,function(dataPoint,index){
 					//Add a new point for each piece of data, passing any required data to draw.
-					var pointPosition;
-					if (!this.scale.animation){
-						pointPosition = this.scale.getPointPosition(index, this.scale.calculateCenterOffset(dataPoint));
-					}
+					// var pointPosition;
+					// if (!this.scale.animation){
+					var pointPosition = this.scale.getPointPosition(index, this.scale.calculateCenterOffset(dataPoint));
+					// }
 					datasetObject.points.push(new this.PointClass({
 						value : dataPoint,
 						label : data.labels[index],
 						datasetLabel: dataset.label,
-						x: (this.options.animation) ? this.scale.xCenter : pointPosition.x,
-						y: (this.options.animation) ? this.scale.yCenter : pointPosition.y,
+						x: pointPosition.x,
+						y: pointPosition.y,
 						strokeColor : dataset.pointStrokeColor,
 						fillColor : dataset.pointColor,
 						highlightFill : dataset.pointHighlightFill || dataset.pointColor,
