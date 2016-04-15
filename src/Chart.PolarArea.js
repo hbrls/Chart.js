@@ -1,6 +1,4 @@
 (function(){
-	"use strict";
-
 	var root = this,
 		Chart = root.Chart,
 		//Cache a local reference to Chart.helpers
