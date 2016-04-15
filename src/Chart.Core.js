@@ -1997,9 +1997,16 @@
 		draw: function(){
 			if (this.display){
 				var ctx = this.ctx;
-				each(this.yLabels, function(label, index){
+				// ** revert it so that it draws from outside in
+				var yLabels = this.yLabels.map(function (label) {
+					return label;
+				}).reverse();
+				var yLabelsCount = yLabels.length;
+				var stripped = this.stripped;
+				var strippedColor = this.strippedColor;
+				each(yLabels, function(label, index){
 					// Don't draw a centre value
-					if (index > 0){
+					if (index < yLabelsCount) {
 						var yCenterOffset = index * (this.drawingArea/this.steps),
 							yHeight = this.yCenter - yCenterOffset,
 							pointPosition;
@@ -2014,21 +2021,47 @@
 								ctx.arc(this.xCenter, this.yCenter, yCenterOffset, 0, Math.PI*2);
 								ctx.closePath();
 								ctx.stroke();
-							} else{
+							} else {
+								if (stripped) {
+									// ** digg a hole
+									// https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/globalCompositeOperation
+									ctx.beginPath();
+									ctx.globalCompositeOperation = 'destination-out';
+									for (var i = 0; i < this.valuesCount; i++) {
+										var offsetFromMin = (yLabelsCount - 1 - index) * this.stepValue;
+										pointPosition = this.getPointPosition(i, this.calculateCenterOffset(this.min + offsetFromMin));
+										if (i === 0) {
+											ctx.moveTo(pointPosition.x, pointPosition.y);
+										} else {
+											ctx.lineTo(pointPosition.x, pointPosition.y);
+										}
+									}
+									ctx.closePath();
+									ctx.fillStyle = '#000';
+									ctx.fill();
+									ctx.globalCompositeOperation = 'source-over';
+								}
+
 								ctx.beginPath();
-								for (var i=0;i<this.valuesCount;i++)
-								{
-									pointPosition = this.getPointPosition(i, this.calculateCenterOffset(this.min + (index * this.stepValue)));
-									if (i === 0){
+								for (var i = 0; i < this.valuesCount; i++) {
+									var offsetFromMin = (yLabelsCount - 1 - index) * this.stepValue;
+									pointPosition = this.getPointPosition(i, this.calculateCenterOffset(this.min + offsetFromMin));
+									if (i === 0) {
 										ctx.moveTo(pointPosition.x, pointPosition.y);
 									} else {
 										ctx.lineTo(pointPosition.x, pointPosition.y);
 									}
 								}
 								ctx.closePath();
+								if (stripped && index % 2) {
+									// ** out most has no background color
+									ctx.fillStyle = strippedColor;
+									ctx.fill();
+								}
 								ctx.stroke();
 							}
 						}
+
 						if(this.showLabels){
 							ctx.font = fontString(this.fontSize,this.fontStyle,this.fontFamily);
 							if (this.showLabelBackdrop){
@@ -2046,6 +2079,10 @@
 							ctx.fillStyle = this.fontColor;
 							ctx.fillText(label, this.xCenter, yHeight);
 						}
+
+						// ctx.globalCompositeOperation = 'source-over';
+						// ctx.restore()
+						// console.log(ctx.globalCompositeOperation);
 					}
 				}, this);
 

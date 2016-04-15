@@ -20,6 +20,9 @@
 			// Boolean - Whether the scale should begin at zero
 			scaleBeginAtZero : true,
 
+			// Boolean - Whether fill the scale area with alternative background colors
+			scaleStripped: false,
+
 			//String - Colour of the angle line
 			angleLineColor : "rgba(0,0,0,.1)",
 
@@ -177,6 +180,8 @@
 				backdropPaddingX: this.options.scaleBackdropPaddingX,
 				lineWidth: (this.options.scaleShowLine) ? this.options.scaleLineWidth : 0,
 				lineColor: this.options.scaleLineColor,
+				stripped: this.options.scaleStripped,
+				strippedColor: this.options.scaleStrippedColor,
 				angleLineColor : this.options.angleLineColor,
 				angleLineWidth : (this.options.angleShowLineOut) ? this.options.angleLineWidth : 0,
 				angleLineInterval: (this.options.angleLineInterval) ? this.options.angleLineInterval : 1,
