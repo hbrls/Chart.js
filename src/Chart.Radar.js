@@ -53,9 +53,6 @@
 			//Number - amount extra to add to the radius to cater for hit detection outside the drawn point
 			pointHitDetectionRadius : 20,
 
-			//Boolean - Whether to show a stroke for datasets
-			datasetStroke : true,
-
 			//Number - Pixel width of dataset stroke
 			datasetStrokeWidth : 2,
 
@@ -182,7 +179,7 @@
 				lineColor: this.options.scaleLineColor,
 				angleLineColor : this.options.angleLineColor,
 				angleLineWidth : (this.options.angleShowLineOut) ? this.options.angleLineWidth : 0,
-        angleLineInterval: (this.options.angleLineInterval) ? this.options.angleLineInterval : 1,
+				angleLineInterval: (this.options.angleLineInterval) ? this.options.angleLineInterval : 1,
 				// Point labels at the edge of each line
 				pointLabelFontColor : this.options.pointLabelFontColor,
 				pointLabelFontSize : this.options.pointLabelFontSize,
