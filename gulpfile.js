@@ -1,7 +1,9 @@
 var gulp = require('gulp'),
+	pump = require('pump'),
 	concat = require('gulp-concat'),
 	uglify = require('gulp-uglify'),
 	util = require('gulp-util'),
+	rev = require('gulp-rev'),
 	jshint = require('gulp-jshint'),
 	size = require('gulp-size'),
 	connect = require('gulp-connect'),
@@ -15,7 +17,8 @@ var gulp = require('gulp'),
 	bower = require('./bower.json'),
 	livereload = require('gulp-livereload');
 
-var srcDir = './src/';
+var SRC_DIR = './src/';
+var OUTPUT_DIR = './dist';
 /*
  *	Usage : gulp build --types=Bar,Line,Doughnut
  *	Output: - A built Chart.js file with Core and types Bar, Line and Doughnut concatenated together
@@ -23,31 +26,30 @@ var srcDir = './src/';
  */
 
 gulp.task('build', function(){
-
-	// Default to all of the chart types, with Chart.Core first
-	var srcFiles = [FileName('Core')],
-		isCustom = !!(util.env.types),
-		outputDir = (isCustom) ? 'custom' : '.';
-	if (isCustom){
-		util.env.types.split(',').forEach(function(type){ return srcFiles.push(FileName(type));});
-	}
-	else{
-		// Seems gulp-concat remove duplicates - nice!
-		// So we can use this to sort out dependency order - aka include Core first!
-		srcFiles.push(srcDir+'*');
+	// PolarArea is not shipped by default
+	var modules = ['Core', 'Bar', 'Doughnut', 'Line', 'Radar'];
+	if (util.env.types) {
+		modules = util.env.types.split(',').map(function (module) {
+			return module;
+		});
+		modules.unshift('Core');
 	}
 
-	return gulp.src(srcFiles)
-		.pipe(concat('Chart.js'))
-		.pipe(replace('{{ version }}', package.version))
-		.pipe(gulp.dest(outputDir))
-		.pipe(uglify({preserveComments:'some'}))
-		.pipe(concat('Chart.min.js'))
-		.pipe(gulp.dest(outputDir));
+	var srcFiles = modules.map(function (module) {
+		return SRC_DIR + 'Chart.' + module + '.js';
+	});
 
-	function FileName(moduleName){
-		return srcDir+'Chart.'+moduleName+'.js';
-	}
+	return pump([
+		gulp.src(srcFiles),
+		concat('Chart.js'),
+		replace('{{ version }}', package.version),
+		replace('{{ modules }}', modules.join(', ')),
+		gulp.dest(OUTPUT_DIR),
+		uglify(),
+		concat('Chart.min.js'),
+		rev(),
+		gulp.dest(OUTPUT_DIR),
+	]);
 });
 
 /*
@@ -87,7 +89,7 @@ gulp.task('release', ['build'], function(){
 });
 
 gulp.task('jshint', function(){
-	return gulp.src(srcDir + '*.js')
+	return gulp.src(SRC_DIR + '*.js')
 		.pipe(jshint())
 		.pipe(jshint.reporter('default'));
 });
@@ -105,7 +107,7 @@ gulp.task('library-size', function(){
 });
 
 gulp.task('module-sizes', function(){
-	return gulp.src(srcDir + '*.js')
+	return gulp.src(SRC_DIR + '*.js')
 	.pipe(uglify({preserveComments:'some'}))
 	.pipe(size({
 		showFiles: true,
