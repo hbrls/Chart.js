@@ -1,11 +1,12 @@
 <!doctype html>
 <html>
 	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 		<title>Bar Chart</title>
-		<script src="../Chart.js"></script>
+		<script src="../dist/h5-chart.js"></script>
 	</head>
 	<body>
-		<div style="width: 50%">
+		<div>
 			<canvas id="canvas" height="450" width="600"></canvas>
 		</div>
 
@@ -35,7 +36,7 @@
 	}
 	window.onload = function(){
 		var ctx = document.getElementById("canvas").getContext("2d");
-		window.myBar = new Chart(ctx).Bar(barChartData, {
+		window.myBar = new head.Chart(ctx).Bar(barChartData, {
 			responsive : true
 		});
 	}

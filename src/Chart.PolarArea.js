@@ -1,6 +1,6 @@
 (function(){
 	var root = this,
-		Chart = root.Chart,
+		Chart = root.head.Chart,
 		//Cache a local reference to Chart.helpers
 		helpers = Chart.helpers;
 

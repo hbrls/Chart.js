@@ -307,7 +307,6 @@
 			//Method for warning of errors
 			if (window.console && typeof window.console.warn === "function") console.warn(str);
 		},
-		amd = helpers.amd = (typeof define === 'function' && define.amd),
 		//-- Math methods
 		isNumber = helpers.isNumber = function(n){
 			return !isNaN(parseFloat(n)) && isFinite(n);
@@ -2230,19 +2229,12 @@
 	})());
 
 
-	if (amd) {
-		define('Chart', [], function(){
-			return Chart;
-		});
-	} else if (typeof module === 'object' && module.exports) {
+	if (typeof module === 'object' && module.exports) {
 		module.exports = Chart;
+	} else {
+		var head = root.head || {};
+		head.Chart = Chart;
+		root.head = head;
 	}
-
-	root.Chart = Chart;
-
-	Chart.noConflict = function(){
-		root.Chart = previous;
-		return Chart;
-	};
 
 }).call(this);

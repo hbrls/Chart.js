@@ -1,6 +1,6 @@
 (function(){
 	var root = this,
-		Chart = root.Chart,
+		Chart = root.head.Chart,
 		helpers = Chart.helpers;
 
 	var defaultConfig = {

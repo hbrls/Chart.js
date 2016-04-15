@@ -1,11 +1,12 @@
 <!doctype html>
 <html>
 	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 		<title>Line Chart</title>
-		<script src="../Chart.js"></script>
+		<script src="../dist/h5-chart.js"></script>
 	</head>
 	<body>
-		<div style="width:30%">
+		<div>
 			<div>
 				<canvas id="canvas" height="450" width="600"></canvas>
 			</div>
@@ -43,7 +44,7 @@
 
 	window.onload = function(){
 		var ctx = document.getElementById("canvas").getContext("2d");
-		window.myLine = new Chart(ctx).Line(lineChartData, {
+		window.myLine = new head.Chart(ctx).Line(lineChartData, {
 			responsive: true
 		});
 	}

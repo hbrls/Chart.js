@@ -1,12 +1,12 @@
 {
-  "name": "chart.js",
-  "homepage": "http://www.chartjs.org",
-  "description": "Simple HTML5 charts using the canvas element.",
-  "version": "1.1.1",
-  "main": "Chart.js",
+  "name": "h5-chart",
+  "homepage": "https://github.com/hbrls/h5-chart",
+  "description": "a subset of www.chartjs.org",
+  "version": "0.0.1",
+  "main": "dist/h5-chart.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/nnnick/Chart.js.git"
+    "url": "https://github.com/hbrls/h5-chart.git"
   },
   "license": "MIT",
   "dependences": {},
@@ -25,8 +25,5 @@
     "inquirer": "^0.5.1",
     "pump": "1.0.1",
     "semver": "^3.0.1"
-  },
-  "spm": {
-    "main": "Chart.js"
   }
 }

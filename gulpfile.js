@@ -41,12 +41,12 @@ gulp.task('build', function(){
 
 	return pump([
 		gulp.src(srcFiles),
-		concat('Chart.js'),
+		concat(package.name + '.js'),
 		replace('{{ version }}', package.version),
 		replace('{{ modules }}', modules.join(', ')),
 		gulp.dest(OUTPUT_DIR),
 		uglify(),
-		concat('Chart.min.js'),
+		concat(package.name + '.min.js'),
 		rev(),
 		gulp.dest(OUTPUT_DIR),
 	]);

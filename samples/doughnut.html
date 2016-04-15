@@ -1,20 +1,12 @@
 <!doctype html>
 <html>
 	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 		<title>Doughnut Chart</title>
-		<script src="../Chart.js"></script>
-		<style>
-			body{
-				padding: 0;
-				margin: 0;
-			}
-			#canvas-holder{
-				width:30%;
-			}
-		</style>
+		<script src="../dist/h5-chart.js"></script>
 	</head>
 	<body>
-		<div id="canvas-holder">
+		<div>
 			<canvas id="chart-area" width="500" height="500"/>
 		</div>
 
@@ -57,7 +49,7 @@
 
 			window.onload = function(){
 				var ctx = document.getElementById("chart-area").getContext("2d");
-				window.myDoughnut = new Chart(ctx).Doughnut(doughnutData, {responsive : true});
+				window.myDoughnut = new head.Chart(ctx).Doughnut(doughnutData, {responsive : true});
 			};
 
 

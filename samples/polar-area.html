@@ -1,11 +1,12 @@
 <!doctype html>
 <html>
 	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 		<title>Polar Area Chart</title>
-		<script src="../Chart.js"></script>
+		<script src="../dist/h5-chart.js"></script>
 	</head>
 	<body>
-		<div id="canvas-holder" style="width:30%">
+		<div id="canvas-holder">
 			<canvas id="chart-area" width="300" height="300"/>
 		</div>
 
@@ -48,7 +49,7 @@
 
 			window.onload = function(){
 				var ctx = document.getElementById("chart-area").getContext("2d");
-				window.myPolarArea = new Chart(ctx).PolarArea(polarData, {
+				window.myPolarArea = new head.Chart(ctx).PolarArea(polarData, {
 					responsive:true
 				});
 			};
