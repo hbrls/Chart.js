@@ -53,20 +53,20 @@
 				y : this.chart.height/2
 			});
 
-			//Set up tooltip events on the chart
-			if (this.options.showTooltips){
-				helpers.bindEvents(this, this.options.tooltipEvents, function(evt){
-					var activeSegments = (evt.type !== 'mouseout') ? this.getSegmentsAtEvent(evt) : [];
+			// //Set up tooltip events on the chart
+			// if (this.options.showTooltips){
+			// 	helpers.bindEvents(this, this.options.tooltipEvents, function(evt){
+			// 		var activeSegments = (evt.type !== 'mouseout') ? this.getSegmentsAtEvent(evt) : [];
 
-					helpers.each(this.segments,function(segment){
-						segment.restore(["fillColor"]);
-					});
-					helpers.each(activeSegments,function(activeSegment){
-						activeSegment.fillColor = activeSegment.highlightColor;
-					});
-					this.showTooltip(activeSegments);
-				});
-			}
+			// 		helpers.each(this.segments,function(segment){
+			// 			segment.restore(["fillColor"]);
+			// 		});
+			// 		helpers.each(activeSegments,function(activeSegment){
+			// 			activeSegment.fillColor = activeSegment.highlightColor;
+			// 		});
+			// 		this.showTooltip(activeSegments);
+			// 	});
+			// }
 			this.calculateTotal(data);
 
 			helpers.each(data,function(datapoint, index){
@@ -92,7 +92,7 @@
 			var index = atIndex !== undefined ? atIndex : this.segments.length;
 			if ( typeof(segment.color) === "undefined" ) {
 				segment.color = Chart.defaults.global.segmentColorDefault[index % Chart.defaults.global.segmentColorDefault.length];
-				segment.highlight = Chart.defaults.global.segmentHighlightColorDefaults[index % Chart.defaults.global.segmentHighlightColorDefaults.length];				
+				segment.highlight = Chart.defaults.global.segmentHighlightColorDefaults[index % Chart.defaults.global.segmentHighlightColorDefaults.length];
 			}
 			this.segments.splice(index, 0, new this.SegmentArc({
 				value : segment.value,

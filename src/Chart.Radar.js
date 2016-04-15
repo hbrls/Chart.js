@@ -80,22 +80,22 @@
 
 			this.buildScale(data);
 
-			//Set up tooltip events on the chart
-			if (this.options.showTooltips){
-				helpers.bindEvents(this, this.options.tooltipEvents, function(evt){
-					var activePointsCollection = (evt.type !== 'mouseout') ? this.getPointsAtEvent(evt) : [];
+			// //Set up tooltip events on the chart
+			// if (this.options.showTooltips){
+			// 	helpers.bindEvents(this, this.options.tooltipEvents, function(evt){
+			// 		var activePointsCollection = (evt.type !== 'mouseout') ? this.getPointsAtEvent(evt) : [];
 
-					this.eachPoints(function(point){
-						point.restore(['fillColor', 'strokeColor']);
-					});
-					helpers.each(activePointsCollection, function(activePoint){
-						activePoint.fillColor = activePoint.highlightFill;
-						activePoint.strokeColor = activePoint.highlightStroke;
-					});
+			// 		this.eachPoints(function(point){
+			// 			point.restore(['fillColor', 'strokeColor']);
+			// 		});
+			// 		helpers.each(activePointsCollection, function(activePoint){
+			// 			activePoint.fillColor = activePoint.highlightFill;
+			// 			activePoint.strokeColor = activePoint.highlightStroke;
+			// 		});
 
-					this.showTooltip(activePointsCollection);
-				});
-			}
+			// 		this.showTooltip(activePointsCollection);
+			// 	});
+			// }
 
 			//Iterate through each of the datasets, and build this into a property of the chart
 			helpers.each(data.datasets,function(dataset){

@@ -99,19 +99,19 @@
 				this.addData(segment,index,true);
 			},this);
 
-			//Set up tooltip events on the chart
-			if (this.options.showTooltips){
-				helpers.bindEvents(this, this.options.tooltipEvents, function(evt){
-					var activeSegments = (evt.type !== 'mouseout') ? this.getSegmentsAtEvent(evt) : [];
-					helpers.each(this.segments,function(segment){
-						segment.restore(["fillColor"]);
-					});
-					helpers.each(activeSegments,function(activeSegment){
-						activeSegment.fillColor = activeSegment.highlightColor;
-					});
-					this.showTooltip(activeSegments);
-				});
-			}
+			// //Set up tooltip events on the chart
+			// if (this.options.showTooltips){
+			// 	helpers.bindEvents(this, this.options.tooltipEvents, function(evt){
+			// 		var activeSegments = (evt.type !== 'mouseout') ? this.getSegmentsAtEvent(evt) : [];
+			// 		helpers.each(this.segments,function(segment){
+			// 			segment.restore(["fillColor"]);
+			// 		});
+			// 		helpers.each(activeSegments,function(activeSegment){
+			// 			activeSegment.fillColor = activeSegment.highlightColor;
+			// 		});
+			// 		this.showTooltip(activeSegments);
+			// 	});
+			// }
 
 			this.render();
 		},
@@ -193,7 +193,7 @@
 			helpers.each(this.segments,function(segment){
 				segment.save();
 			});
-			
+
 			this.reflow();
 			this.render();
 		},
