@@ -89,7 +89,7 @@
 			scaleBeginAtZero: false,
 
 			// String - Scale label font declaration for the scale label
-			scaleFontFamily: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif",
+			scaleFontFamily: "'Helvetica Neue', 'Helvetica', sans-serif",
 
 			// Number - Scale label font size in pixels
 			scaleFontSize: 12,
