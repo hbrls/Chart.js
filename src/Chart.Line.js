@@ -14,8 +14,14 @@
 		//Number - Width of the grid lines
 		scaleGridLineWidth : 1,
 
+		//Boolean - Whether to show x axis
+		scaleShowXAxis: true,
+
 		//Boolean - Whether to show horizontal lines (except X axis)
 		scaleShowHorizontalLines: true,
+
+		//Boolean - Whether to show y axis
+		scaleShowYAxis: true,
 
 		//Boolean - Whether to show vertical lines (except Y axis)
 		scaleShowVerticalLines: true,
@@ -199,8 +205,16 @@
 				font : helpers.fontString(this.options.scaleFontSize, this.options.scaleFontStyle, this.options.scaleFontFamily),
 				lineWidth : this.options.scaleLineWidth,
 				lineColor : this.options.scaleLineColor,
+				showXAxis : this.options.scaleShowXAxis,
 				showHorizontalLines : this.options.scaleShowHorizontalLines,
+				showYAxis : this.options.scaleShowYAxis,
 				showVerticalLines : this.options.scaleShowVerticalLines,
+				yAxisId: this.options.yAxisId || 'LEFT',
+				yAxisWidth: this.options.scaleYAxisWidth || 10,
+				textAlign: this.options.scaleFontAlign,
+				textAlignRightFix: this.options.scaleFontAlignRightFix || 0,
+				xScalePaddingLeft: this.options.xScalePaddingLeft > -1 ? this.options.xScalePaddingLeft : null,
+				xScalePaddingRight: this.options.xScalePaddingRight > -1 ? this.options.xScalePaddingRight : null,
 				gridLineWidth : (this.options.scaleShowGridLines) ? this.options.scaleGridLineWidth : 0,
 				gridLineColor : (this.options.scaleShowGridLines) ? this.options.scaleGridLineColor : "rgba(0,0,0,0)",
 				padding: (this.options.showScale) ? 0 : this.options.pointDotRadius + this.options.pointDotStrokeWidth,

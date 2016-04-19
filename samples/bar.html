@@ -37,7 +37,14 @@
 	window.onload = function(){
 		var ctx = document.getElementById("canvas").getContext("2d");
 		window.myBar = new head.Chart(ctx).Bar(barChartData, {
-			responsive : true
+			responsive: true,
+			scaleYAxisId: 'RIGHT',
+			scaleYAxisWidth: 20,
+			scaleShowYAxis: false,
+			scaleShowVerticalLines: false,
+			scaleFontAlign: 'right',
+			xScalePaddingLeft: 0,
+			xScalePaddingRight: 10,
 		});
 	}
 

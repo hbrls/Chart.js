@@ -100,6 +100,9 @@
 			// String - Scale label font colour
 			scaleFontColor: "#666",
 
+			// String - Scale label font colour
+			scaleFontAlign: "left",
+
 			// Boolean - whether or not the chart should be responsive and resize when the browser does.
 			responsive: false,
 
@@ -1649,9 +1652,12 @@
 				firstRotated,
 				lastRotated;
 
-
-			this.xScalePaddingRight = lastWidth/2 + 3;
-			this.xScalePaddingLeft = (firstWidth/2 > this.yLabelWidth) ? firstWidth/2 : this.yLabelWidth;
+			if (this.xScalePaddingLeft === null) {
+				this.xScalePaddingLeft = (firstWidth / 2 > this.yLabelWidth) ? firstWidth / 2 : this.yLabelWidth;
+			}
+			if (this.xScalePaddingRight === null) {
+				this.xScalePaddingRight = lastWidth / 2 + 3;
+			}
 
 			this.xLabelRotation = 0;
 			if (this.display){
@@ -1705,9 +1711,13 @@
 		calculateX : function(index){
 			var isRotated = (this.xLabelRotation > 0),
 				// innerWidth = (this.offsetGridLines) ? this.width - offsetLeft - this.padding : this.width - (offsetLeft + halfLabelWidth * 2) - this.padding,
-				innerWidth = this.width - (this.xScalePaddingLeft + this.xScalePaddingRight),
+				innerWidth = this.width - this.xScalePaddingLeft - this.xScalePaddingRight - this.yAxisWidth,
 				valueWidth = innerWidth/Math.max((this.valuesCount - ((this.offsetGridLines) ? 0 : 1)), 1),
 				valueOffset = (valueWidth * index) + this.xScalePaddingLeft;
+
+			if (this.yAxisId === 'LEFT') {
+				valueOffset += this.yAxisWidth;
+			}
 
 			if (this.offsetGridLines){
 				valueOffset += (valueWidth/2);
@@ -1720,10 +1730,28 @@
 			this.fit();
 		},
 		draw : function(){
-			var ctx = this.ctx,
-				yLabelGap = (this.endPoint - this.startPoint) / this.steps,
+			var ctx = this.ctx;
+			var yLabelGap = (this.endPoint - this.startPoint) / this.steps;
+			var innerWidth = this.width - this.xScalePaddingLeft - this.xScalePaddingRight - this.yAxisWidth;
+
+			// default: y axis on left
+			var xStart = Math.round(this.xScalePaddingLeft + this.yAxisWidth);
+			var xEnd = Math.round(xStart + innerWidth);
+			var xLabelStart = Math.round(this.xScalePaddingLeft);
+			var yLabelStart = xLabelStart;
+
+			if (this.yAxisId !== 'LEFT') {
 				xStart = Math.round(this.xScalePaddingLeft);
-			if (this.display){
+				xEnd = Math.round(xStart + innerWidth);
+				xLabelStart = Math.round(this.width - this.xScalePaddingRight - this.yAxisWidth);
+				if (this.textAlign === 'left') {
+					yLabelStart = xLabelStart + this.yAxisWidth;
+				} else if (this.textAlign === 'right') {
+					yLabelStart = xLabelStart + this.yAxisWidth + this.textAlignRightFix;
+				}
+			}
+
+			if (this.display) {
 				ctx.fillStyle = this.textColor;
 				ctx.font = this.font;
 				each(this.yLabels,function(labelString,index){
@@ -1731,14 +1759,14 @@
 						linePositionY = Math.round(yLabelCenter),
 						drawHorizontalLine = this.showHorizontalLines;
 
-					ctx.textAlign = "right";
+					ctx.textAlign = this.textAlign;
 					ctx.textBaseline = "middle";
 					if (this.showLabels){
-						ctx.fillText(labelString,xStart - 10,yLabelCenter);
+						ctx.fillText(labelString, yLabelStart, yLabelCenter);
 					}
 
 					// This is X axis, so draw it
-					if (index === 0 && !drawHorizontalLine){
+					if (index === 0 && this.showXAxis){
 						drawHorizontalLine = true;
 					}
 
@@ -1760,19 +1788,25 @@
 
 					if(drawHorizontalLine){
 						ctx.moveTo(xStart, linePositionY);
-						ctx.lineTo(this.width, linePositionY);
+						ctx.lineTo(xEnd, linePositionY);
 						ctx.stroke();
 						ctx.closePath();
 					}
 
-					ctx.lineWidth = this.lineWidth;
-					ctx.strokeStyle = this.lineColor;
-					ctx.beginPath();
-					ctx.moveTo(xStart - 5, linePositionY);
-					ctx.lineTo(xStart, linePositionY);
-					ctx.stroke();
-					ctx.closePath();
-
+					if (drawHorizontalLine) {
+						ctx.lineWidth = this.lineWidth;
+						ctx.strokeStyle = this.lineColor;
+						ctx.beginPath();
+						if (this.yAxisId === 'LEFT') {
+							ctx.moveTo(xStart - 5, linePositionY);
+							ctx.lineTo(xStart, linePositionY);
+						} else {
+							ctx.moveTo(xEnd, linePositionY);
+							ctx.lineTo(xEnd + 5, linePositionY);
+						}
+						ctx.stroke();
+						ctx.closePath();
+					}
 				},this);
 
 				each(this.xLabels,function(label,index){
@@ -1780,10 +1814,11 @@
 						// Check to see if line/bar here and decide where to place the line
 						linePos = this.calculateX(index - (this.offsetGridLines ? 0.5 : 0)) + aliasPixel(this.lineWidth),
 						isRotated = (this.xLabelRotation > 0),
-						drawVerticalLine = this.showVerticalLines;
+						drawVerticalLine = this.showVerticalLines,
+						showYAxis = this.showYAxis;
 
 					// This is Y axis, so draw it
-					if (index === 0 && !drawVerticalLine){
+					if (index === 0 && showYAxis){
 						drawVerticalLine = true;
 					}
 
@@ -1808,17 +1843,17 @@
 						ctx.closePath();
 					}
 
-
 					ctx.lineWidth = this.lineWidth;
 					ctx.strokeStyle = this.lineColor;
 
-
-					// Small lines at the bottom of the base grid line
-					ctx.beginPath();
-					ctx.moveTo(linePos,this.endPoint);
-					ctx.lineTo(linePos,this.endPoint + 5);
-					ctx.stroke();
-					ctx.closePath();
+					if (drawVerticalLine) {
+						// Small lines at the bottom of the base grid line
+						ctx.beginPath();
+						ctx.moveTo(linePos,this.endPoint);
+						ctx.lineTo(linePos,this.endPoint + 5);
+						ctx.stroke();
+						ctx.closePath();
+					}
 
 					ctx.save();
 					ctx.translate(xPos,(isRotated) ? this.endPoint + 12 : this.endPoint + 8);
