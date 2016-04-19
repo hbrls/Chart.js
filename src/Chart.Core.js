@@ -526,15 +526,15 @@
 			return tmpl(templateString,valuesObject);
 		},
 		/* jshint ignore:end */
-		generateLabels = helpers.generateLabels = function(templateString,numberOfSteps,graphMin,stepValue){
-			var labelsArray = new Array(numberOfSteps);
-			if (templateString){
-				each(labelsArray,function(val,index){
-					labelsArray[index] = template(templateString,{value: (graphMin + (stepValue*(index+1)))});
-				});
-			}
-			return labelsArray;
-		},
+		// generateLabels = helpers.generateLabels = function(templateString,numberOfSteps,graphMin,stepValue){
+		// 	var labelsArray = new Array(numberOfSteps);
+		// 	if (templateString){
+		// 		each(labelsArray,function(val,index){
+		// 			labelsArray[index] = template(templateString,{value: (graphMin + (stepValue*(index+1)))});
+		// 		});
+		// 	}
+		// 	return labelsArray;
+		// },
 		// // --Animation methods
 		// // Easing functions adapted from Robert Penner's easing equations
 		// // http://www.robertpenner.com/easing/
@@ -972,9 +972,9 @@
 			// }
 			return this;
 		},
-		generateLegend : function(){
-			return helpers.template(this.options.legendTemplate, this);
-		},
+		// generateLegend : function(){
+		// 	return helpers.template(this.options.legendTemplate, this);
+		// },
 		destroy : function(){
 			// this.stop();
 			this.clear();
